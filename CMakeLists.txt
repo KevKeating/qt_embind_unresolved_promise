@@ -12,7 +12,7 @@ qt_add_executable(embind_unresolved_promise main.cpp)
 target_link_libraries(embind_unresolved_promise PRIVATE Qt6::Widgets)
 
 if(EMSCRIPTEN)
-    target_link_options(embind_unresolved_promise PRIVATE -lembind)
+    target_link_options(embind_unresolved_promise PRIVATE -lembind -sASYNCIFY)
 
     # Post-build: expose the Emscripten instance globally so embind functions
     # are accessible from the browser dev console (e.g. window.Module.get_label_contents())

@@ -13,4 +13,13 @@ target_link_libraries(embind_unresolved_promise PRIVATE Qt6::Widgets)
 
 if(EMSCRIPTEN)
     target_link_options(embind_unresolved_promise PRIVATE -lembind)
+
+    # Post-build: expose the Emscripten instance globally so embind functions
+    # are accessible from the browser dev console (e.g. window.Module.get_label_contents())
+    add_custom_command(TARGET embind_unresolved_promise POST_BUILD
+        COMMAND ${CMAKE_COMMAND}
+            -DHTML_FILE=$<TARGET_FILE_DIR:embind_unresolved_promise>/embind_unresolved_promise.html
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/patch_html.cmake
+        COMMENT "Patching HTML to expose Emscripten instance on window.Module"
+    )
 endif()

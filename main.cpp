@@ -34,7 +34,7 @@ std::string get_label_contents() {
 
 #ifdef __EMSCRIPTEN__
 EMSCRIPTEN_BINDINGS(my_app) {
-    emscripten::function("get_label_contents", &get_label_contents);
+    emscripten::function("get_label_contents", &get_label_contents, emscripten::async());
 }
 #endif
 
